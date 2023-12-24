@@ -1,0 +1,12 @@
+.pomodoro {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100dvh;
+}
+
+.buttons {
+	display: flex;
+	gap: 10px;
+}
