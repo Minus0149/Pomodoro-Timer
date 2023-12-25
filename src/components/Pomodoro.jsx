@@ -5,7 +5,7 @@ import useSound from "use-sound";
 import bell from "../assets/bell.wav";
 
 const Pomodoro = () => {
-	const [secondsLeft, setSecondsLeft] = useState(0.05 * 60);
+	const [secondsLeft, setSecondsLeft] = useState(25 * 60);
 	const [timer, setTimer] = useState();
 	const [paused, setPaused] = useState(true);
 	const [mode, setMode] = useState("session");
