@@ -3,11 +3,15 @@ import React, { useEffect, useState } from "react";
 import { BiReset } from "react-icons/bi";
 import useSound from "use-sound";
 import bell from "../assets/bell.wav";
+import { IoMdSettings } from "react-icons/io";
+import Setting from "./Setting";
 
 const Pomodoro = () => {
-	const [secondsLeft, setSecondsLeft] = useState(25 * 60);
+	const [minutes, setMinutes] = useState({ session: 25, break: 5 });
+	const [secondsLeft, setSecondsLeft] = useState(minutes.session * 60);
 	const [timer, setTimer] = useState();
 	const [paused, setPaused] = useState(true);
+	const [setting, setSetting] = useState(false);
 	const [mode, setMode] = useState("session");
 
 	const [play] = useSound(bell, { volume: 0.7 });
@@ -25,7 +29,7 @@ const Pomodoro = () => {
 
 	const stop = () => {
 		clearInterval(timer);
-		setSecondsLeft(25 * 60);
+		setSecondsLeft(minutes.session * 60);
 		setPaused(true);
 		setMode("session");
 	};
@@ -40,12 +44,12 @@ const Pomodoro = () => {
 			clearInterval(timer);
 			play();
 			setMode("break");
-			setSecondsLeft(5 * 60);
+			setSecondsLeft(minutes.break * 60);
 			setPaused(true);
 		}
 		if (secondsLeft === 0 && mode === "break") {
 			clearInterval(timer);
-			setSecondsLeft(25 * 60);
+			setSecondsLeft(minutes.session * 60);
 			setMode("session");
 			play();
 			setPaused(true);
@@ -58,6 +62,14 @@ const Pomodoro = () => {
 
 	return (
 		<div className="pomodoro">
+			{setting && (
+				<Setting
+					minutes={minutes}
+					setMinutes={setMinutes}
+					setSetting={setSetting}
+					stop={stop}
+				/>
+			)}
 			<h2>{mode === "session" ? "Session" : "Break"}</h2>
 			<div className="timer">
 				{Math.floor(secondsLeft / 60) < 10
@@ -80,17 +92,31 @@ const Pomodoro = () => {
 					{paused ? "start" : "pause"}
 				</button>
 				<button
+					className="icon"
 					onClick={stop}
 					onTouchStart={(e) => {
-						e.target.classList.add(`active`);
+						e.currentTarget.classList.add(`active`);
 					}}
 					onTouchEnd={(e) => {
-						setTimeout(() => {
-							e.target.classList.remove(`active`);
-						}, 100);
+						e.currentTarget.classList.remove(`active`);
 					}}
 				>
-					<BiReset className="icon" />
+					<BiReset />
+				</button>
+				<button
+					className="icon"
+					onClick={() => {
+						pause();
+						setSetting(true);
+					}}
+					onTouchStart={(e) => {
+						e.currentTarget.classList.add(`active`);
+					}}
+					onTouchEnd={(e) => {
+						e.currentTarget.classList.remove(`active`);
+					}}
+				>
+					<IoMdSettings />
 				</button>
 			</div>
 		</div>

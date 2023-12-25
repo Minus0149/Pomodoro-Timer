@@ -1,0 +1,23 @@
+.counter-contianer {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.counter {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 140px;
+}
+
+.counter button {
+	border: 0;
+	font-size: 1.5rem;
+	cursor: pointer;
+}
+
+.counter-heading {
+	font-size: 1.5rem;
+	font-weight: 700;
+}
