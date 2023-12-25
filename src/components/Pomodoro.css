@@ -24,16 +24,17 @@ button {
 	height: 40px;
 	width: 100px;
 	border-radius: 25px;
+	color: white;
 	border: 1px solid white;
 	background-color: transparent;
 	outline: none;
 	font-size: 1.2rem;
-	padding-bottom: 3px;
+	padding-bottom: 2px;
 }
 
 button:nth-of-type(2) > .icon {
 	padding-bottom: 0;
-	padding-top: 7px;
+	padding-top: 5px;
 }
 
 .timer {
