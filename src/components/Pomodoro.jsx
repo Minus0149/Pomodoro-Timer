@@ -2,15 +2,15 @@ import "./Pomodoro.css";
 import React, { useEffect, useState } from "react";
 import { BiReset } from "react-icons/bi";
 import useSound from "use-sound";
+import bell from "../assets/bell.wav";
 
 const Pomodoro = () => {
-	const [secondsLeft, setSecondsLeft] = useState(25 * 60);
+	const [secondsLeft, setSecondsLeft] = useState(0.05 * 60);
 	const [timer, setTimer] = useState();
 	const [paused, setPaused] = useState(true);
-	const [play] = useSound(
-		"https://cdn.freecodecamp.org/testable-projects-fcc/audio/BeepSound.wav",
-		{ volume: 0.7 }
-	);
+	const [mode, setMode] = useState("session");
+
+	const [play] = useSound(bell, { volume: 0.7 });
 
 	const start = () => {
 		setPaused(false);
@@ -27,6 +27,7 @@ const Pomodoro = () => {
 		clearInterval(timer);
 		setSecondsLeft(25 * 60);
 		setPaused(true);
+		setMode("session");
 	};
 
 	const pause = () => {
@@ -35,9 +36,19 @@ const Pomodoro = () => {
 	};
 
 	useEffect(() => {
-		if (secondsLeft === 0) {
+		if (secondsLeft === 0 && mode === "session") {
 			clearInterval(timer);
 			play();
+			setMode("break");
+			setSecondsLeft(5 * 60);
+			setPaused(true);
+		}
+		if (secondsLeft === 0 && mode === "break") {
+			clearInterval(timer);
+			setSecondsLeft(25 * 60);
+			setMode("session");
+			play();
+			setPaused(true);
 		}
 	}, [secondsLeft, timer]);
 
@@ -47,7 +58,7 @@ const Pomodoro = () => {
 
 	return (
 		<div className="pomodoro">
-			<h2>Session</h2>
+			<h2>{mode === "session" ? "Session" : "Break"}</h2>
 			<div className="timer">
 				{Math.floor(secondsLeft / 60) < 10
 					? `0${Math.floor(secondsLeft / 60)}`
