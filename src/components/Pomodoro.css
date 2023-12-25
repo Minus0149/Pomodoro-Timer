@@ -3,10 +3,53 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	height: 100dvh;
+	height: 75vh;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+h2 {
+	font-size: 2rem;
 }
 
 .buttons {
 	display: flex;
 	gap: 10px;
+}
+
+button {
+	height: 40px;
+	width: 100px;
+	border-radius: 25px;
+	border: 1px solid white;
+	background-color: transparent;
+	outline: none;
+	font-size: 1.2rem;
+	padding-bottom: 3px;
+}
+
+button:nth-of-type(2) > .icon {
+	padding-bottom: 0;
+	padding-top: 7px;
+}
+
+.timer {
+	font-size: 5rem;
+	font-weight: 700;
+}
+
+.active {
+	background-color: white;
+	color: black;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	button:hover,
+	button:active {
+		background-color: white;
+		color: black;
+	}
 }
